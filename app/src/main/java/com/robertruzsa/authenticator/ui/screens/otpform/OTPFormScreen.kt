@@ -1,4 +1,4 @@
-package com.robertruzsa.authenticator.ui.screens
+package com.robertruzsa.authenticator.ui.screens.otpform
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable

@@ -8,8 +8,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.robertruzsa.authenticator.ui.navigation.Screen
-import com.robertruzsa.authenticator.ui.screens.ListScreen
-import com.robertruzsa.authenticator.ui.screens.NewItemScreen
+import com.robertruzsa.authenticator.ui.screens.otplist.ListScreen
+import com.robertruzsa.authenticator.ui.screens.otpform.NewItemScreen
 import com.robertruzsa.authenticator.ui.theme.AuthenticatorTheme
 
 class MainActivity : ComponentActivity() {

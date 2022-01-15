@@ -1,10 +1,10 @@
-package com.robertruzsa.authenticator.ui.screens
+package com.robertruzsa.authenticator.ui.screens.otplist
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
+import com.robertruzsa.authenticator.ui.components.OTPList
 import com.robertruzsa.authenticator.ui.components.TopBar
 
 @Composable
@@ -22,6 +22,7 @@ fun ListScreen(
                 backgroundColor = MaterialTheme.colors.secondary,
                 contentColor = MaterialTheme.colors.onSecondary,
                 onClick = {
+                    onButtonClick()
                 }
             ) {
                 Icon(
@@ -31,13 +32,6 @@ fun ListScreen(
             }
         }
     ) {
-        Column {
-            Text(text = "list screen")
-            Button(
-                onClick = onButtonClick
-            ) {
-                Text("QR-kód beolvasása")
-            }
-        }
+        OTPList()
     }
 }

@@ -1,23 +1,86 @@
 package com.robertruzsa.authenticator.ui.screens.otpform
 
-import android.util.Log
+import android.widget.RadioGroup
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Button
+import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.viewinterop.AndroidViewBinding
-import com.robertruzsa.authenticator.databinding.FragmentCodeReaderBinding
-import com.robertruzsa.codereaderview.BarcodeFormat
+import androidx.compose.ui.unit.dp
+import com.robertruzsa.authenticator.ui.components.BaseButton
+import com.robertruzsa.authenticator.ui.components.TopBar
+import com.robertruzsa.authenticator.ui.components.textfield.BaseTextField
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun NewItemScreen() {
-    AndroidViewBinding(
-        factory = FragmentCodeReaderBinding::inflate,
-        modifier = Modifier.fillMaxSize()
+
+    var accountNameText by remember { mutableStateOf("") }
+    var otpSecretText by remember { mutableStateOf("") }
+
+    val keyTextFieldFocusRequest = remember {
+        FocusRequester()
+    }
+
+    val focusManager = LocalFocusManager.current
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
     ) {
-        codeReader.setOnBarcodeScannedListener(BarcodeFormat.ALL_FORMATS) {
-            Log.d("robi", it)
-        }
+        TopBar(
+            navigationIcon = Icons.Filled.ArrowBack,
+            title = "Enter account details"
+        )
+        BaseTextField(
+            label = "Account name",
+            value = accountNameText,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+                .focusRequester(FocusRequester()),
+            onImeAction = {
+                keyTextFieldFocusRequest.requestFocus()
+            },
+            onValueChange = {
+                accountNameText = it
+            },
+        )
+        BaseTextField(
+            label = "Key",
+            value = otpSecretText,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+                .focusRequester(keyTextFieldFocusRequest),
+            onImeAction = {
+                focusManager.clearFocus()
+            },
+            imeAction = ImeAction.Done,
+            onValueChange = {
+                otpSecretText = it
+            },
+        )
+        BaseButton(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    start = 16.dp,
+                    end = 16.dp,
+                    top = 8.dp,
+                    bottom = 16.dp
+                ),
+            text = "Add"
+        )
     }
 }

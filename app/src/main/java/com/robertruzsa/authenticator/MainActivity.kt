@@ -6,10 +6,12 @@ import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
+import com.robertruzsa.authenticator.ui.navigation.Argument
 import com.robertruzsa.authenticator.ui.navigation.Screen
-import com.robertruzsa.authenticator.ui.screens.otpform.NewItemScreen
 import com.robertruzsa.authenticator.ui.screens.otplist.ListScreen
+import com.robertruzsa.authenticator.ui.screens.qrreader.QRReaderScreen
 import com.robertruzsa.authenticator.ui.theme.AuthenticatorTheme
 
 class MainActivity : ComponentActivity() {
@@ -25,23 +27,29 @@ class MainActivity : ComponentActivity() {
 fun AuthenticatorApp() {
     AuthenticatorTheme {
         val navController = rememberNavController()
+        val qrDataKey = Argument.QRData.key
         NavHost(
             navController = navController,
-            startDestination = Screen.List.route
+            startDestination = Screen.OTPList.fullRoute
         ) {
             composable(
-                route = Screen.List.route
-            ) {
+                route = Screen.OTPList.fullRoute,
+                arguments = listOf(
+                    navArgument(qrDataKey) {
+                    }
+                )
+            ) { backStackEntry ->
                 ListScreen(
+                    qrData = backStackEntry.arguments?.getString(qrDataKey),
                     onButtonClick = {
-                        navController.navigate(route = Screen.NewItem.route)
+                        navController.navigate(route = Screen.OTPForm.route)
                     }
                 )
             }
             composable(
-                route = Screen.NewItem.route
+                route = Screen.OTPForm.route
             ) {
-                NewItemScreen()
+                QRReaderScreen(navController)
             }
         }
     }

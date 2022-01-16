@@ -9,7 +9,8 @@ import com.robertruzsa.ui.components.TopBar
 
 @Composable
 fun ListScreen(
-    onButtonClick: () -> Unit
+    onButtonClick: () -> Unit,
+    qrData: String? = null
 ) {
     Scaffold(
         topBar = {

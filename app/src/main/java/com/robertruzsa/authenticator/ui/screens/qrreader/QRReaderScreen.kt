@@ -6,9 +6,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidViewBinding
 import androidx.navigation.NavController
 import com.robertruzsa.authenticator.databinding.FragmentCodeReaderBinding
-import com.robertruzsa.authenticator.ui.navigation.Screen
+import com.robertruzsa.authenticator.ui.navigation.Argument
 import com.robertruzsa.codereaderview.BarcodeFormat
-import java.net.URLEncoder
 
 @Composable
 fun QRReaderScreen(
@@ -19,12 +18,8 @@ fun QRReaderScreen(
         modifier = Modifier.fillMaxSize()
     ) {
         codeReader.setOnBarcodeScannedListener(BarcodeFormat.QR_CODE) { qrData ->
-            val escapedQRDataString = URLEncoder.encode(qrData, "UTF8")
-            navController.navigate("${Screen.OTPList.route}/$escapedQRDataString") {
-                popUpTo(Screen.OTPList.fullRoute) {
-                    inclusive = true
-                }
-            }
+            navController.previousBackStackEntry?.arguments?.putString(Argument.QRData.key, qrData)
+            navController.popBackStack()
         }
     }
 }

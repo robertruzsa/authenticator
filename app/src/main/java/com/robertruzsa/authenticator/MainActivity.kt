@@ -30,10 +30,10 @@ fun AuthenticatorApp() {
         val qrDataKey = Argument.QRData.key
         NavHost(
             navController = navController,
-            startDestination = Screen.OTPList.fullRoute
+            startDestination = Screen.OTPList.route
         ) {
             composable(
-                route = Screen.OTPList.fullRoute,
+                route = Screen.OTPList.route,
                 arguments = listOf(
                     navArgument(qrDataKey) {
                     }

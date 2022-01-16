@@ -1,9 +1,7 @@
 package com.robertruzsa.authenticator.ui.navigation
 
 sealed class Screen(val route: String) {
-    object OTPList : Screen("otp_list") {
-        val fullRoute = "$route/{${Argument.QRData.key}}"
-    }
+    object OTPList : Screen("otp_list")
     object OTPForm : Screen("otp_form")
     object QRReader : Screen("qr_reader")
 }

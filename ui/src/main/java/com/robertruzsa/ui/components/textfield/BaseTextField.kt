@@ -1,4 +1,4 @@
-package com.robertruzsa.authenticator.ui.components.textfield
+package com.robertruzsa.ui.components.textfield
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box

@@ -4,8 +4,8 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
-import com.robertruzsa.authenticator.ui.components.OTPList
-import com.robertruzsa.authenticator.ui.components.TopBar
+import com.robertruzsa.authenticator.ui.screens.otplist.components.OTPList
+import com.robertruzsa.ui.components.TopBar
 
 @Composable
 fun ListScreen(

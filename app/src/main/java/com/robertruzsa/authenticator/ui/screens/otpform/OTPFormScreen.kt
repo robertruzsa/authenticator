@@ -1,12 +1,9 @@
 package com.robertruzsa.authenticator.ui.screens.otpform
 
-import android.widget.RadioGroup
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
@@ -17,9 +14,9 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.robertruzsa.authenticator.ui.components.BaseButton
-import com.robertruzsa.authenticator.ui.components.TopBar
-import com.robertruzsa.authenticator.ui.components.textfield.BaseTextField
+import com.robertruzsa.ui.components.BaseButton
+import com.robertruzsa.ui.components.TopBar
+import com.robertruzsa.ui.components.textfield.BaseTextField
 
 @Preview(showBackground = true)
 @Composable

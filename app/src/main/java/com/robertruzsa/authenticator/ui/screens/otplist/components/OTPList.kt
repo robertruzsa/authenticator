@@ -1,4 +1,4 @@
-package com.robertruzsa.authenticator.ui.components
+package com.robertruzsa.authenticator.ui.screens.otplist.components
 
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items

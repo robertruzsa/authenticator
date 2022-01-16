@@ -1,4 +1,4 @@
-package com.robertruzsa.authenticator.ui.components.textfield
+package com.robertruzsa.ui.components.textfield
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer

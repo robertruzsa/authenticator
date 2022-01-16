@@ -1,4 +1,4 @@
-package com.robertruzsa.authenticator.ui.components
+package com.robertruzsa.authenticator.ui.screens.otplist.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth

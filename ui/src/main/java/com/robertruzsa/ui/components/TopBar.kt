@@ -1,4 +1,4 @@
-package com.robertruzsa.authenticator.ui.components
+package com.robertruzsa.ui.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*

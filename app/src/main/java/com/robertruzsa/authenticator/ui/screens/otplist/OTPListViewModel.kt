@@ -4,18 +4,24 @@ import android.net.Uri
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.robertruzsa.authenticator.domain.model.Account
-import com.robertruzsa.authenticator.util.OTPAccount
+import androidx.lifecycle.viewModelScope
+import com.robertruzsa.authenticator.domain.model.OTPAccount
+import com.robertruzsa.authenticator.repository.OTPAccountRepository
 import com.robertruzsa.authenticator.util.OTPUriResolver
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.turingcomplete.kotlinonetimepassword.TimeBasedOneTimePasswordGenerator
-import org.apache.commons.codec.binary.Base32
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class OTPListViewModel @Inject constructor() : ViewModel() {
+class OTPListViewModel @Inject constructor(
+    private val otpAccountRepository: OTPAccountRepository
+) : ViewModel() {
 
-    val otpList: MutableState<List<Account>> = mutableStateOf(emptyList())
+    val otpList: MutableState<List<OTPAccount>> = mutableStateOf(emptyList())
+
+    init {
+        getAllOtpAccounts()
+    }
 
     fun handleAction(action: OTPListAction) {
         when (action) {
@@ -28,19 +34,17 @@ class OTPListViewModel @Inject constructor() : ViewModel() {
     private fun handleQrCode(action: OTPListAction.QRCodeReceived) {
         val uri = Uri.parse(action.qrCodeData)
         val otpAccount = OTPUriResolver().process(uri) as? OTPAccount.TOTPAccount
-        val uiModel = if (otpAccount != null) {
-            Account(
-                accountName = otpAccount.accountName,
-                code = TimeBasedOneTimePasswordGenerator(
-                    Base32().decode(otpAccount.secret),
-                    otpAccount.config
-                ).generate(System.currentTimeMillis())
-            )
-        } else {
-            null
+        otpAccount?.let {
+            viewModelScope.launch {
+                otpAccountRepository.insertOTPAccount(otpAccount)
+                getAllOtpAccounts()
+            }
         }
-        uiModel?.let {
-            otpList.value = listOf(uiModel)
+    }
+
+    private fun getAllOtpAccounts() {
+        viewModelScope.launch {
+            otpList.value = otpAccountRepository.getAllOtpAccounts()
         }
     }
 }

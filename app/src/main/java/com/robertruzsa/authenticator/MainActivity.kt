@@ -48,11 +48,8 @@ fun AuthenticatorApp() {
                 val factory = HiltViewModelFactory(LocalContext.current, backStackEntry)
                 val viewModel: OTPListViewModel = viewModel(::OTPListViewModel.name, factory)
                 ListScreen(
-                    viewModel = viewModel,
-                    qrData = backStackEntry.arguments?.getString(qrDataKey),
-                    onButtonClick = {
-                        navController.navigate(route = Screen.OTPForm.route)
-                    }
+                    navController = navController,
+                    viewModel = viewModel
                 )
             }
             composable(

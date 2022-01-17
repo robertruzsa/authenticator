@@ -7,14 +7,12 @@ import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.robertruzsa.authenticator.domain.model.Account
+import com.robertruzsa.authenticator.domain.model.OTPAccount
 
-@Preview
 @Composable
 fun OTPItem(
-    account: Account = Account("accoune name", "123456")
+    account: OTPAccount
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -24,7 +22,7 @@ fun OTPItem(
             modifier = Modifier.padding(8.dp),
         ) {
             Text(text = account.accountName)
-            Text(text = account.code)
+            Text(text = account.secret)
         }
     }
 }

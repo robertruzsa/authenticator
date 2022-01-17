@@ -1,6 +1,7 @@
 package com.robertruzsa.authenticator.util
 
 import android.net.Uri
+import com.robertruzsa.authenticator.domain.model.OTPAccount
 import dev.turingcomplete.kotlinonetimepassword.HmacAlgorithm
 import dev.turingcomplete.kotlinonetimepassword.HmacOneTimePasswordConfig
 import dev.turingcomplete.kotlinonetimepassword.TimeBasedOneTimePasswordConfig
@@ -78,26 +79,4 @@ class OTPUriResolver {
         const val DEFAULT_TOTP_PERIOD = 30L
         const val DEFAULT_OTP_DIGITS = 6
     }
-}
-
-sealed class OTPAccount(
-    open val issuer: String,
-    open val accountName: String,
-    open val secret: String,
-    open val config: HmacOneTimePasswordConfig
-) {
-    data class TOTPAccount(
-        override val issuer: String,
-        override val accountName: String,
-        override val secret: String,
-        override val config: TimeBasedOneTimePasswordConfig
-    ) : OTPAccount(issuer, accountName, secret, config)
-
-    data class HOTPAccount(
-        override val issuer: String,
-        override val accountName: String,
-        override val secret: String,
-        val counter: Long,
-        override val config: HmacOneTimePasswordConfig
-    ) : OTPAccount(issuer, accountName, secret, config)
 }

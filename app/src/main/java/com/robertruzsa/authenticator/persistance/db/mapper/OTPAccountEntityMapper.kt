@@ -13,6 +13,7 @@ class OTPAccountEntityMapper : DomainMapper<OTPAccountEntity, OTPAccount> {
         return when (model.type) {
             OTPType.TOTP -> {
                 OTPAccount.TOTPAccount(
+                    id = model.id,
                     issuer = model.issuer,
                     accountName = model.accountName,
                     secret = model.secret,
@@ -26,6 +27,7 @@ class OTPAccountEntityMapper : DomainMapper<OTPAccountEntity, OTPAccount> {
             }
             OTPType.HOTP -> {
                 OTPAccount.HOTPAccount(
+                    id = model.id,
                     issuer = model.issuer,
                     accountName = model.accountName,
                     secret = model.secret,

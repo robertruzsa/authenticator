@@ -33,7 +33,7 @@ class OTPListViewModel @Inject constructor(
 
     private fun handleQrCode(action: OTPListAction.QRCodeReceived) {
         val uri = Uri.parse(action.qrCodeData)
-        val otpAccount = OTPUriResolver().process(uri) as? OTPAccount.TOTPAccount
+        val otpAccount = OTPUriResolver().process(uri)
         otpAccount?.let {
             viewModelScope.launch {
                 otpAccountRepository.insertOTPAccount(otpAccount)

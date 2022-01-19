@@ -13,7 +13,10 @@ fun OTPList(
 ) {
     LazyColumn {
         items(otpList) { account ->
-            OTPItem(account)
+            when (account) {
+                is OTPAccount.TOTPAccount -> TOTPItem(account)
+                is OTPAccount.HOTPAccount -> HOTPItem(account)
+            }
         }
     }
 }

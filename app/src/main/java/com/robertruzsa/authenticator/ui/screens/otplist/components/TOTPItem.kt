@@ -2,7 +2,10 @@ package com.robertruzsa.authenticator.ui.screens.otplist.components
 
 import android.os.Handler
 import android.os.Looper
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -11,45 +14,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.robertruzsa.authenticator.domain.model.OTPAccount
+import com.robertruzsa.authenticator.util.OTPCodeGenerator
 import com.robertruzsa.ui.components.CountDownIndicator
-import dev.turingcomplete.kotlinonetimepassword.HmacOneTimePasswordGenerator
-import dev.turingcomplete.kotlinonetimepassword.TimeBasedOneTimePasswordGenerator
-import org.apache.commons.codec.binary.Base32
 
-@Preview
+@Preview(showBackground = true)
 @Composable
-fun OTPItem(
-    account: OTPAccount? = null
-) {
-    when (account) {
-        is OTPAccount.TOTPAccount -> TOTPItem(account)
-        is OTPAccount.HOTPAccount -> HOTPItem(account)
-    }
-}
-
-private fun generateOTPCode(otpAccount: OTPAccount): String {
-    val decodedSecret = Base32().decode(otpAccount.secret)
-
-    return when (otpAccount) {
-        is OTPAccount.TOTPAccount -> {
-            TimeBasedOneTimePasswordGenerator(
-                decodedSecret,
-                otpAccount.config
-            ).generate(System.currentTimeMillis())
-        }
-        is OTPAccount.HOTPAccount -> {
-            HmacOneTimePasswordGenerator(
-                decodedSecret,
-                otpAccount.config
-            ).generate(otpAccount.counter)
-        }
-    }
-}
-
-@Composable
-fun TOTPItem(account: OTPAccount.TOTPAccount) {
+fun TOTPItem(account: OTPAccount.TOTPAccount = OTPAccount.TOTPAccount()) {
     var otpCode by remember {
-        mutableStateOf(generateOTPCode(account))
+        mutableStateOf(OTPCodeGenerator.generateTOTPCode(account))
     }
 
     var progress by remember {
@@ -63,7 +35,7 @@ fun TOTPItem(account: OTPAccount.TOTPAccount) {
 
         val runnable = object : Runnable {
             override fun run() {
-                otpCode = generateOTPCode(account)
+                otpCode = OTPCodeGenerator.generateTOTPCode(account)
                 progress = 0f
                 handler.postDelayed(this, periodMillis)
             }
@@ -96,9 +68,4 @@ fun TOTPItem(account: OTPAccount.TOTPAccount) {
             )
         }
     }
-}
-
-@Composable
-fun HOTPItem(account: OTPAccount.HOTPAccount) {
-    // TODO
 }

@@ -11,11 +11,11 @@ import androidx.compose.ui.graphics.Color
 
 @Composable
 fun CountDownIndicator(
-    currentProgress: Float,
-    onTick: (Float) -> Unit,
-    countDownFromMillis: Long,
     modifier: Modifier = Modifier,
-    color: Color
+    currentProgress: Float = 0f,
+    onTick: (Float) -> Unit = {},
+    countDownFromMillis: Long = 30_000,
+    color: Color = Color.Blue
 ) {
 
     val sectorUnitSize: Float =

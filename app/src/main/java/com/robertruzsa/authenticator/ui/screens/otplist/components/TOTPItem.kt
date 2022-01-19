@@ -2,17 +2,16 @@ package com.robertruzsa.authenticator.ui.screens.otplist.components
 
 import android.os.Handler
 import android.os.Looper
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.robertruzsa.authenticator.domain.model.OTPAccount
 import com.robertruzsa.authenticator.util.OTPCodeGenerator
 import com.robertruzsa.ui.components.CountDownIndicator
@@ -50,20 +49,34 @@ fun TOTPItem(account: OTPAccount.TOTPAccount = OTPAccount.TOTPAccount()) {
 
     Card(
         modifier = Modifier.fillMaxWidth(),
-        elevation = 8.dp
+        elevation = 0.dp
     ) {
-        Column(
-            modifier = Modifier.padding(8.dp),
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(24.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(text = account.accountName)
-            Text(text = otpCode)
+            Column {
+                Text(
+                    text = account.accountName,
+                    fontSize = 18.sp
+                )
+                Text(
+                    text = otpCode,
+                    fontSize = 24.sp,
+                    color = Color.Blue
+                )
+            }
             CountDownIndicator(
                 currentProgress = progress,
                 onTick = { progressUnit ->
                     progress += progressUnit
                 },
                 countDownFromMillis = periodMillis,
-                modifier = Modifier.size(20.dp),
+                modifier = Modifier
+                    .size(24.dp)
+                    .align(Alignment.CenterVertically),
                 color = Color.Blue
             )
         }

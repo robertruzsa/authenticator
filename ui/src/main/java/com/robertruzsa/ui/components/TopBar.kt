@@ -7,7 +7,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun TopBar(
@@ -16,9 +19,12 @@ fun TopBar(
     onNavigationIconClick: () -> Unit = {},
     actionIcon: ImageVector? = null,
     onActionIconClick: () -> Unit = {},
+    elevation: Dp = AppBarDefaults.TopAppBarElevation,
+    titleFontSize: TextUnit = 24.sp
 ) {
     TopAppBar(
         backgroundColor = MaterialTheme.colors.surface,
+        elevation = elevation
     ) {
         Row(
             modifier = Modifier.fillMaxSize(),
@@ -43,9 +49,9 @@ fun TopBar(
                         .padding(start = 16.dp)
                         .align(Alignment.CenterVertically),
                     text = title,
-                    style = MaterialTheme.typography.h5,
                     color = MaterialTheme.colors.onSurface,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    fontSize = titleFontSize
                 )
             }
 

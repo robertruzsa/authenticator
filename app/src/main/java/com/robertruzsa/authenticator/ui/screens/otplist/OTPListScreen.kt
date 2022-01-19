@@ -4,7 +4,10 @@ import android.os.Bundle
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.robertruzsa.authenticator.ui.navigation.Argument
 import com.robertruzsa.authenticator.ui.navigation.Screen
@@ -29,7 +32,8 @@ fun ListScreen(
     Scaffold(
         topBar = {
             TopBar(
-                title = "Főoldal"
+                title = "Hitelesítő kódok",
+                elevation = 0.dp
             )
         },
         floatingActionButton = {

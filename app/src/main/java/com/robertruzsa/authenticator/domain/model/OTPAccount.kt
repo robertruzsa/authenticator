@@ -16,19 +16,28 @@ sealed class OTPAccount(
         override val id: Int = 0,
         override val issuer: String = "TOTP Issuer",
         override val accountName: String = "TOTP account name",
-        override val secret: String = "TOTP secret",
+        override val secret: String = "HXDMVJECJJWSRB3HWIZR4IFUGFTMXBOZ",
         override val config: TimeBasedOneTimePasswordConfig = TimeBasedOneTimePasswordConfig(
             timeStep = 30,
             timeStepUnit = TimeUnit.SECONDS,
             codeDigits = 6,
             hmacAlgorithm = HmacAlgorithm.SHA1
         )
-    ) : OTPAccount(id, issuer, accountName, secret, config)
+    ) : OTPAccount(id, issuer, accountName, secret, config) {
+
+        fun getAccountDisplayText(): String {
+            return if (issuer.isNotBlank()) {
+                "$issuer ($accountName)"
+            } else {
+                accountName
+            }
+        }
+    }
 
     data class HOTPAccount(
         override val id: Int = 0,
         override val issuer: String = "HOTP Issuer",
-        override val accountName: String = "HOTP account name",
+        override val accountName: String = "HXDMVJECJJWSRB3HWIZR4IFUGFTMXBOZ",
         override val secret: String = "HOTP secret",
         val counter: Long = 0,
         override val config: HmacOneTimePasswordConfig = HmacOneTimePasswordConfig(

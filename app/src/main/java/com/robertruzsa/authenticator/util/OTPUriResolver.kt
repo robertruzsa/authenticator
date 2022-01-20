@@ -18,10 +18,30 @@ class OTPUriResolver {
             return null
         }
 
-        val issuer = uri.getQueryParameter(OTP_URI_ISSUER) ?: return null
+        val issuerFromParam: String? = uri.getQueryParameter(OTP_URI_ISSUER)
         val path = uri.path ?: return null
         val label =
             path.drop(1) // dropping the first char, because path has the following format: "/alice@google.com"
+
+        var issuerFromLabel: String? = null
+        var accountNameFromLabel: String? = null
+        try {
+            val labelParts: List<String> = label.split(":")
+            when (labelParts.size) {
+                2 -> {
+                    issuerFromLabel = labelParts[0]
+                    accountNameFromLabel = labelParts[1]
+                }
+                1 -> {
+                    accountNameFromLabel = label
+                }
+            }
+        } catch (e: Exception) {
+            return null
+        }
+
+        val accountName: String = accountNameFromLabel ?: return null
+        val issuer: String = issuerFromParam ?: issuerFromLabel ?: ""
 
         val secret = uri.getQueryParameter(OTP_URI_SECRET) ?: return null // TODO: validate
         val digits = uri.getQueryParameter(TOTP_DIGITS)?.toIntOrNull() ?: DEFAULT_OTP_DIGITS
@@ -34,7 +54,7 @@ class OTPUriResolver {
             TOTP_URI_AUTHORITY -> {
                 OTPAccount.TOTPAccount(
                     issuer = issuer,
-                    accountName = label, // TODO
+                    accountName = accountName,
                     secret = secret,
                     config = TimeBasedOneTimePasswordConfig(
                         timeStep = period,
@@ -47,7 +67,7 @@ class OTPUriResolver {
             HOTP_URI_AUTHORITY -> {
                 OTPAccount.HOTPAccount(
                     issuer = issuer,
-                    accountName = label, // TODO
+                    accountName = accountName,
                     secret = secret,
                     counter = counter,
                     config = HmacOneTimePasswordConfig(

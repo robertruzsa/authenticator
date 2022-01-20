@@ -4,11 +4,11 @@ import android.os.Handler
 import android.os.Looper
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -59,13 +59,13 @@ fun TOTPItem(account: OTPAccount.TOTPAccount = OTPAccount.TOTPAccount()) {
         ) {
             Column {
                 Text(
-                    text = account.accountName,
+                    text = account.getAccountDisplayText(),
                     fontSize = 18.sp
                 )
                 Text(
                     text = otpCode,
                     fontSize = 24.sp,
-                    color = Color.Blue
+                    color = MaterialTheme.colors.primary
                 )
             }
             CountDownIndicator(
@@ -77,7 +77,7 @@ fun TOTPItem(account: OTPAccount.TOTPAccount = OTPAccount.TOTPAccount()) {
                 modifier = Modifier
                     .size(24.dp)
                     .align(Alignment.CenterVertically),
-                color = Color.Blue
+                color = MaterialTheme.colors.primary
             )
         }
     }

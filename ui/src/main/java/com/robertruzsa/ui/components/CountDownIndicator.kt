@@ -56,4 +56,4 @@ fun CountDownIndicator(
 
 const val FULL_ROTATION_DEGREES: Float = 360f
 const val START_ANGLE: Float = -90f
-const val REDRAW_INTERVAL_MILLIS: Long = 100
+const val REDRAW_INTERVAL_MILLIS: Long = 50

@@ -20,7 +20,7 @@ import com.robertruzsa.ui.components.textfield.BaseTextField
 
 @Preview(showBackground = true)
 @Composable
-fun NewItemScreen() {
+fun OTPFormScreen() {
 
     var accountNameText by remember { mutableStateOf("") }
     var otpSecretText by remember { mutableStateOf("") }

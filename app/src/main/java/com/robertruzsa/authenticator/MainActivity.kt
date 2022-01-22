@@ -13,6 +13,7 @@ import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
 import com.robertruzsa.authenticator.ui.navigation.Argument
 import com.robertruzsa.authenticator.ui.navigation.Screen
+import com.robertruzsa.authenticator.ui.screens.otpform.OTPFormScreen
 import com.robertruzsa.authenticator.ui.screens.otplist.ListScreen
 import com.robertruzsa.authenticator.ui.screens.otplist.OTPListViewModel
 import com.robertruzsa.authenticator.ui.screens.qrreader.QRReaderScreen
@@ -53,9 +54,14 @@ fun AuthenticatorApp() {
                 )
             }
             composable(
-                route = Screen.OTPForm.route
+                route = Screen.QRReader.route
             ) {
                 QRReaderScreen(navController)
+            }
+            composable(
+                route = Screen.OTPForm.route
+            ) {
+                OTPFormScreen()
             }
         }
     }

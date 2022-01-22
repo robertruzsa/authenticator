@@ -1,18 +1,20 @@
 package com.robertruzsa.authenticator.ui.screens.otplist
 
 import android.os.Bundle
-import androidx.compose.material.*
+import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.material.icons.outlined.CameraAlt
+import androidx.compose.material.icons.outlined.Keyboard
+import androidx.compose.runtime.*
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.robertruzsa.authenticator.ui.navigation.Argument
 import com.robertruzsa.authenticator.ui.navigation.Screen
 import com.robertruzsa.authenticator.ui.screens.otplist.components.OTPList
 import com.robertruzsa.ui.components.TopBar
+import com.robertruzsa.ui.components.multifab.MultiFabItem
+import com.robertruzsa.ui.components.multifab.MultiFloatingActionButton
 
 @Composable
 fun ListScreen(
@@ -36,19 +38,27 @@ fun ListScreen(
                 elevation = 0.dp
             )
         },
+
         floatingActionButton = {
-            FloatingActionButton(
-                backgroundColor = MaterialTheme.colors.secondary,
-                contentColor = MaterialTheme.colors.onSecondary,
-                onClick = {
-                    navController.navigate(route = Screen.OTPForm.route)
-                }
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Add,
-                    contentDescription = ""
+            MultiFloatingActionButton(
+                fabIcon = Icons.Filled.Add,
+                items = listOf(
+                    MultiFabItem(
+                        icon = Icons.Outlined.CameraAlt,
+                        label = "QR-kód beolvasása",
+                        onClick = {
+                            navController.navigate(route = Screen.QRReader.route)
+                        }
+                    ),
+                    MultiFabItem(
+                        icon = Icons.Outlined.Keyboard,
+                        label = "Kézi bevitel",
+                        onClick = {
+                            navController.navigate(route = Screen.OTPForm.route)
+                        }
+                    )
                 )
-            }
+            )
         }
     ) {
         OTPList(otpList)

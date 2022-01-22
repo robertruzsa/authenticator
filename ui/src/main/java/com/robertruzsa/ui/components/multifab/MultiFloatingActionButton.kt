@@ -1,9 +1,7 @@
 package com.robertruzsa.ui.components.multifab
 
-import androidx.compose.animation.core.Transition
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.core.updateTransition
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -12,11 +10,11 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+@ExperimentalAnimationApi
 @Composable
 fun MultiFloatingActionButton(
     fabIcon: ImageVector,
@@ -26,28 +24,15 @@ fun MultiFloatingActionButton(
 
     var fabState by remember { mutableStateOf(MultiFabState.COLLAPSED) }
 
-    val transition: Transition<MultiFabState> =
-        updateTransition(targetState = fabState, label = "transition")
-
-    val alpha: Float by transition.animateFloat(
-        label = "alpha",
-        transitionSpec = {
-            tween(durationMillis = 80)
-        }
-    ) { state ->
-        when (state) {
-            MultiFabState.COLLAPSED -> 0f
-            MultiFabState.EXPANDED -> 1f
-        }
-    }
     Column(horizontalAlignment = Alignment.End) {
         items.forEach { item ->
-            MiniFloatingActionButton(
-                item = item,
-                alpha = alpha,
-                showLabels = showLabels,
-                onFabItemClicked = item.onClick
-            )
+            AnimatedVisibility(visible = fabState == MultiFabState.EXPANDED) {
+                MiniFloatingActionButton(
+                    item = item,
+                    showLabels = showLabels,
+                    onFabItemClicked = item.onClick
+                )
+            }
             Spacer(modifier = Modifier.height(20.dp))
         }
         FloatingActionButton(
@@ -69,18 +54,17 @@ fun MultiFloatingActionButton(
     }
 }
 
+@ExperimentalAnimationApi
 @Composable
 private fun MiniFloatingActionButton(
     item: MultiFabItem,
-    alpha: Float,
     showLabels: Boolean,
     onFabItemClicked: () -> Unit
 ) {
     Row(
         modifier = Modifier
             .wrapContentSize()
-            .padding(end = 10.dp)
-            .alpha(alpha),
+            .padding(end = 10.dp),
         horizontalArrangement = Arrangement.spacedBy(10.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
